@@ -1,5 +1,4 @@
-import { Body, Controller, Get, Param, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller() // 함수에 인자가 들어가면 localhost:8000/인자 의 형태로 엔드포인트 변경 가능.
