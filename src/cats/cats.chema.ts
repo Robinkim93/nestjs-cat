@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { Document, SchemaOptions } from 'mongoose';
 
@@ -7,6 +8,12 @@ const options: SchemaOptions = {
 };
 @Schema(options) // 스키마를 생성하고 옵션을 지정한 데코레이터
 export class Cat extends Document {
+  @ApiProperty({
+    // 어떤 body를 보내면 되는지 swagger상의 example을 달아준다.
+    example: 'kal6529@naver.com',
+    description: 'email',
+    required: true,
+  })
   @Prop({
     required: true, // 필수
     unique: true, // 유일
@@ -15,11 +22,21 @@ export class Cat extends Document {
   @IsNotEmpty() // 비어있지 않도록 해주는 데코레이터
   email: string;
 
+  @ApiProperty({
+    example: 'blue',
+    description: 'name',
+    required: true,
+  })
   @Prop({ required: true }) // 하나의 column이 된다.
   @IsString()
   @IsNotEmpty()
   name: string;
 
+  @ApiProperty({
+    example: '11111',
+    description: 'password',
+    required: true,
+  })
   @Prop({ required: true })
   @IsString()
   @IsNotEmpty()

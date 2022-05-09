@@ -1,15 +1,8 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { PickType } from '@nestjs/swagger';
+import { Cat } from '../cats.chema';
 
-export class CatRequestDto {
-  @IsEmail() // Email형식으로 validation 해주는 데코레이터
-  @IsNotEmpty() // 비어있지 않도록 해주는 데코레이터
-  email: string;
-
-  @IsString()
-  @IsNotEmpty()
-  name: string;
-
-  @IsString()
-  @IsNotEmpty()
-  password: string;
-}
+export class CatRequestDto extends PickType(Cat, [
+  'email',
+  'name',
+  'password',
+] as const) {}
