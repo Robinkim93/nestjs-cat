@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post, UseFilters } from '@nestjs/common';
 import { HttpExceptionFilter } from 'src/http-exception.filter';
 import { CatsService } from './cats.service';
+import { CatRequestDto } from './dto/cats.request.dto';
 
 @Controller('cats')
 @UseFilters(HttpExceptionFilter)
@@ -13,9 +14,8 @@ export class CatsController {
   }
 
   @Post()
-  async signUp(@Body() body) {
-    console.log(body);
-    return 'signup';
+  async signUp(@Body() body: CatRequestDto) {
+    return await this.catsService.signUp(body); // signUp의 return값이 Promise이기 때문에 await처리해줌.
   }
 
   @Post('login')

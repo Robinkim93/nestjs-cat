@@ -28,6 +28,18 @@ export class Cat extends Document {
   @Prop()
   @IsString()
   imgUrl: string;
+
+  readonly readOnlyData: { id: string; email: string; name: string };
 }
 
 export const CatSchema = SchemaFactory.createForClass(Cat); // Cat은 class이기 때문에 Schema로 바꿔준 것.
+
+CatSchema.virtual('readOnlyData').get(function (this: Cat) {
+  //스키마에 virtual메서드 즉, 클라이언트나 프론트단에 보여줄 내용만 정해줄 수 있다.
+  // this: Cat은 Cat을 this로 받아주고 type을 정해준 것. (타입스크립트 문법)
+  return {
+    id: this.id,
+    email: this.email,
+    name: this.name,
+  };
+});
