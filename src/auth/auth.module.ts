@@ -8,10 +8,10 @@ import JwtStrategy from './jwt/jwt.strategy';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot(), // 환경변수를 사용하기 위해서 와야함.
     PassportModule.register({ defaultStrategy: 'jwt', session: false }),
     JwtModule.register({
-      secret: 'secret',
+      secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1y' },
     }),
     forwardRef(() => CatsModule),
