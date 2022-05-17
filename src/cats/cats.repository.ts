@@ -29,4 +29,20 @@ export class CatsRepository {
     // hash처리된 id를 받아서 유효성검사를 하고, select 함수로 password를 뺀 나머지를 return해서 jwt 모듈에 넘긴다.
     return cat;
   }
+
+  async findByIdAndUpdateImg(id: string, fileName: string) {
+    const cat = await this.catModel.findById(id);
+
+    cat.imgUrl = `http://localhost:8000/media/${fileName}`;
+
+    const newCat = await cat.save();
+
+    console.log(newCat);
+
+    return newCat.readOnlyData;
+  }
+
+  async findAll() {
+    return await this.catModel.find();
+  }
 }

@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as expressBasicAuth from 'express-basic-auth';
-import path from 'path';
+import * as path from 'path';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/exceptions/http-exception.filter';
 
@@ -18,7 +18,7 @@ async function bootstrap() {
       users: { [process.env.SWAGGER_USER]: process.env.SWAGGER_PASSWORD },
     }),
   );
-  app.useStaticAssets(path.join(__dirname, './common', 'uploads'), {
+  app.useStaticAssets(path.join(__dirname, '/common', 'uploads'), {
     prefix: '/media',
   });
   // http://localhost:8000/media/cats로 접근하기 위해 prefix를 넣어주는 middleware

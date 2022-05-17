@@ -1,7 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { CatRequestDto } from './dto/cats.request.dto';
+import { CatRequestDto } from '../dto/cats.request.dto';
 import * as bcrypt from 'bcrypt';
-import { CatsRepository } from './cats.repository';
+import { CatsRepository } from '../cats.repository';
+import { Cat } from '../cats.chema';
 
 @Injectable()
 export class CatsService {
@@ -26,5 +27,20 @@ export class CatsService {
     });
 
     return cat.readOnlyData; // virtual db를 넣어줌으로써 원치않는 데이터에 접근을 막을 수 있다.
+  }
+  async uploadImg(cat: Cat, files: Express.Multer.File[]) {
+    const fileName = `cats/${files[0].filename}`;
+
+    console.log(fileName);
+
+    const newCat = this.catsRepository.findByIdAndUpdateImg(cat.id, fileName);
+    console.log(newCat);
+    return newCat;
+  }
+
+  async getAllCat() {
+    const allCat = await this.catsRepository.findAll();
+    const readOnlyCat = allCat.map((cat) => cat.readOnlyData);
+    return readOnlyCat;
   }
 }
