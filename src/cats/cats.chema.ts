@@ -1,9 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-import { Document, SchemaOptions } from 'mongoose';
+import { Document, ObjectId, SchemaOptions } from 'mongoose';
 
 const options: SchemaOptions = {
+  collection: 'cats', // collection 이름을 정해줄 수 있다. db에서 확인해보기.
   timestamps: true, // 변동된 일자를 찍어주는 옵션.
 };
 @Schema(options) // 스키마를 생성하고 옵션을 지정한 데코레이터

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, ObjectId, Types } from 'mongoose';
 import { Cat } from './cats.chema';
 import { CatRequestDto } from './dto/cats.request.dto';
 
@@ -24,7 +24,9 @@ export class CatsRepository {
     return user;
   }
 
-  async findCatByIdWithoutPassword(catId: string): Promise<Cat | null> {
+  async findCatByIdWithoutPassword(
+    catId: string | ObjectId,
+  ): Promise<Cat | null> {
     const cat = await this.catModel.findById(catId).select('-password');
     // hash처리된 id를 받아서 유효성검사를 하고, select 함수로 password를 뺀 나머지를 return해서 jwt 모듈에 넘긴다.
     return cat;
@@ -43,6 +45,6 @@ export class CatsRepository {
   }
 
   async findAll() {
-    return await this.catModel.find();
+    return await this.catModel.find(); // 모든 고양이 찾기
   }
 }
